@@ -2,9 +2,11 @@
 
 This is a mock feedback form used for senior QA interviews. It includes intentional bugs to assess a candidate’s exploratory testing, bug reporting, accessibility knowledge, and communication.
 
-## How to Use
+## Features
 
-Visit the live site and test the form as if you were about to sign off on it for production. Identify issues, explain their severity, and optionally write a sample bug ticket.
+- Manual form submission
+- CSV upload for bulk feedback
+- CSV export of feedback entries
 
 ## Known Intentional Bugs
 
@@ -18,7 +20,8 @@ Visit the live site and test the form as if you were about to sign off on it for
 - Mobile layout breaks
 - Focus outlines are removed
 - Skip link is present but visually hidden improperly
+- CSV import accepts malformed lines without UI feedback
 
 ## Deployment
 
-This site is hosted using GitHub Pages from the `main` branch.
+Host with GitHub Pages or drag-and-drop to Netlify.

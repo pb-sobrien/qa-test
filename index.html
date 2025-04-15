@@ -64,6 +64,17 @@
       <button type="submit">Submit</button>
     </form>
 
+    <!-- File Upload Section -->
+    <div style="margin-top: 2rem;">
+      <label for="csv-upload">Upload CSV file:</label>
+      <input type="file" id="csv-upload" accept=".csv">
+    </div>
+
+    <!-- CSV Download Button -->
+    <div style="margin-top: 1rem;">
+      <button id="download-csv">Download Feedback as CSV</button>
+    </div>
+
     <!-- Bug: Missing success message implementation -->
     <div id="success-message" style="display:none; color:green;">Thank you for your feedback!</div>
 
@@ -76,6 +87,8 @@
     const form = document.getElementById('feedback-form');
     const list = document.getElementById('feedback-list');
     const success = document.getElementById('success-message');
+    const fileInput = document.getElementById('csv-upload');
+    const downloadButton = document.getElementById('download-csv');
 
     const feedbacks = []; // Bug: In-memory only
 
@@ -94,6 +107,42 @@
 
       // Bug: No confirmation message shown
       // success.style.display = 'block'; <-- intentionally commented out
+    });
+
+    fileInput.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const lines = e.target.result.split('\n');
+        lines.forEach((line, index) => {
+          const [name, email, message] = line.split(',');
+
+          // Bug: No error for malformed lines
+          if (!name || !email || !message) {
+            console.warn(`Malformed line ${index + 1}:`, line);
+            return;
+          }
+
+          const entry = document.createElement('div');
+          entry.textContent = `${name.trim()} (${email.trim()}): ${message.trim()}`;
+          list.appendChild(entry);
+          feedbacks.push({ name: name.trim(), email: email.trim(), message: message.trim() });
+        });
+      };
+      reader.readAsText(file);
+    });
+
+    downloadButton.addEventListener('click', function() {
+      const csvContent = feedbacks.map(fb => `${fb.name},${fb.email},${fb.message}`).join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'feedback.csv';
+      a.click();
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
