@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Submit Feedbak</title> <!-- Bug: Misspelled title -->
+  <title>Submit Feedbak</title> 
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -29,36 +29,35 @@
       border-top: 1px solid #ccc;
       padding-top: 1rem;
     }
-    /* Bug: Mobile layout issue */
+
     .mobile-breaker {
       width: 800px;
       height: 10px;
       background: red;
     }
-    /* Bug: Accessibility - No focus style */
+
     input:focus, textarea:focus, button:focus {
       outline: none;
     }
   </style>
 </head>
 <body>
-  <!-- Bug: No skip link for keyboard users -->
   <a href="#feedback-form" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">Skip to main content</a>
 
   <div class="container">
-    <h1>Submit Feedbak</h1> <!-- Bug: Misspelled heading -->
+    <h1>Submit Feedbak</h1>
     <form id="feedback-form">
-      <!-- Bug: No label 'for' attribute linking -->
+
       <label>Name</label>
-      <input type="text" id="name" aria-label="Your Name"> <!-- Bug: No required -->
+      <input type="text" id="name" aria-label="Your Name"> 
 
       <label>Email</label>
-      <input type="text" id="email" aria-label="Your Email"> <!-- Bug: No validation -->
+      <input type="text" id="email" aria-label="Your Email"> 
 
       <label>Message</label>
       <textarea id="message" aria-label="Your Message"></textarea>
 
-      <!-- Bug: No alt text on icon -->
+
       <img src="/icons/send.png" style="width:16px; height:16px;"> 
 
       <button type="submit">Submit</button>
@@ -75,12 +74,11 @@
       <button id="download-csv">Download Feedback as CSV</button>
     </div>
 
-    <!-- Bug: Missing success message implementation -->
     <div id="success-message" style="display:none; color:green;">Thank you for your feedback!</div>
 
     <div class="feedback-list" id="feedback-list"></div>
 
-    <div class="mobile-breaker"></div> <!-- Bug: Causes layout issues on small screens -->
+    <div class="mobile-breaker"></div> 
   </div>
 
   <script>
@@ -90,7 +88,7 @@
     const fileInput = document.getElementById('csv-upload');
     const downloadButton = document.getElementById('download-csv');
 
-    const feedbacks = []; // Bug: In-memory only
+    const feedbacks = []; // 
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -105,7 +103,6 @@
 
       feedbacks.push({ name, email, message });
 
-      // Bug: No confirmation message shown
       // success.style.display = 'block'; <-- intentionally commented out
     });
 
@@ -119,7 +116,6 @@
         lines.forEach((line, index) => {
           const [name, email, message] = line.split(',');
 
-          // Bug: No error for malformed lines
           if (!name || !email || !message) {
             console.warn(`Malformed line ${index + 1}:`, line);
             return;
